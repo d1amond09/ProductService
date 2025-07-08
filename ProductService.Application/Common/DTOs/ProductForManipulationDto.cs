@@ -16,5 +16,10 @@ public record ProductForManipulationDto
 	public double? Price { get; init; }
 }
 
-public record ProductForUpdateDto : ProductForManipulationDto;
+public record ProductForUpdateDto : ProductForManipulationDto
+{
+	[Required(ErrorMessage = "Availability is a required field.")]
+	public bool Availability { get; init; }
+}
+
 public record ProductForCreationDto : ProductForManipulationDto;

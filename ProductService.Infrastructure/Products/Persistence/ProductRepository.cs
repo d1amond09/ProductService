@@ -52,7 +52,5 @@ public class ProductRepository(AppDbContext db) : RepositoryBase<Product>(db), I
 	}
 
 	public async Task<Product?> FindByIdToUpdateAsync(Guid id, CancellationToken ct) =>
-		await _dbSet
-			.IgnoreQueryFilters()
-			.FirstOrDefaultAsync(p => p.Id == id, ct);
+		await FirstOrDefaultAsync(p => p.Id == id, true, ct);
 }
