@@ -1,11 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using ProductService.Domain.Products;
+using ProductService.Application.Common.Interfaces;
 using ProductService.Infrastructure.Products.Persistence.Configurations;
 
 namespace ProductService.Infrastructure.Common.Persistence;
 
-public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
+public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options), IUnitOfWork
 {
 	public DbSet<Product> Products { get; set; }
 

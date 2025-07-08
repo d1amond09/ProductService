@@ -1,7 +1,11 @@
 ﻿using System.Text.Json;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ProductService.Application.Common.DTOs;
+using ProductService.Application.Common.Interfaces;
 using ProductService.Application.Common.RequestFeatures.ModelParameters;
+using ProductService.Application.UseCases.Products.AddProduct;
 using ProductService.Application.UseCases.Products.GetProduct;
 using ProductService.Application.UseCases.Products.GetProducts;
 using ProductService.Application.UseCases.Products.GetProductsByUser;
@@ -30,13 +34,26 @@ public class ProductsController(ISender sender) : ControllerBase
 		Response.Headers.Append("X-Pagination", JsonSerializer.Serialize(pagedProducts.MetaData));
 
 		return Ok(pagedProducts.Items);
-	}	
+	}
 
-	[HttpGet("{id:guid}", Name = "GetProduct")]
-	public async Task<IActionResult> GetProduct(Guid id)
+	[HttpGet("{id:guid}", Name = "GetProductById")]
+	public async Task<IActionResult> GetProductById(Guid id)
 	{
 		var productDetails = await sender.Send(new GetProductQuery(id));
 		return Ok(productDetails);
 	}
 
+	[HttpPost]
+	[Authorize]
+	[ProducesResponseType(typeof(object), StatusCodes.Status201Created)]
+	public async Task<IActionResult> CreateProduct([FromBody] ProductForCreationDto request)
+	{
+		var newProductId = await sender.Send(new AddProductCommand(request));
+
+		return CreatedAtAction(
+			nameof(GetProductById),
+			new { id = newProductId },
+			new { id = newProductId }
+		);
+	}
 }

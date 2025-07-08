@@ -4,12 +4,26 @@ services:
       - ConnectionStrings__Default=Host=database;Port=5432;Database=mydatabase;Username=myuser;Password=mypassword
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080
-      - ASPNETCORE_HTTPS_PORTS=8081
+      - ASPNETCORE_HTTPS_PORTS=443
     ports:
       - "8080"
-      - "8081"
+      - "443"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+  
+  userservice.api:
+    environment:
+        - ASPNETCORE_ENVIRONMENT=Development
+        - ASPNETCORE_HTTP_PORTS=8081
+        - ASPNETCORE_HTTPS_PORTS=444
+    ports:
+        - "8081"
+        - "444"
+    volumes:
+        - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+        - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+        - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+        - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro

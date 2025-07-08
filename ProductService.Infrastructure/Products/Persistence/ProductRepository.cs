@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using ProductService.Application.Common.Interfaces;
+﻿using ProductService.Application.Common.Interfaces;
 using ProductService.Application.Common.RequestFeatures;
 using ProductService.Application.Common.RequestFeatures.ModelParameters;
 using ProductService.Domain.Products;

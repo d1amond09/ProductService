@@ -1,10 +1,28 @@
 services:
+  userservice.api:
+    container_name: inno-userservice-api
+    image: d1amond9/user-service-api:latest 
+    restart: on-failure
+    networks:
+      - innoshop-network
+
   productservice.api:
     image: ${DOCKER_REGISTRY-}productserviceapi
     build:
       context: .
       dockerfile: ProductService.API/Dockerfile
+    networks:
+      - innoshop-network
    
+  redis:
+    image: redis:7-alpine 
+    container_name: inno-redis
+    restart: always
+    ports:
+      - "6379:6379"
+    networks:
+      - innoshop-network
+  
   database:
     image: postgres:latest
     restart: always
@@ -16,6 +34,12 @@ services:
       - db_data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
+    networks:
+      - innoshop-network
 
 volumes:
   db_data:
+  
+networks:
+  innoshop-network:
+    driver: bridge 
