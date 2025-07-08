@@ -7,8 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="UseCases\Products\GetProductsByUser\" />
-    <Folder Include="UseCases\Products\GetProducts\" />
     <Folder Include="UseCases\Products\DeleteProduct\" />
     <Folder Include="UseCases\Products\CreateProduct\" />
     <Folder Include="UseCases\Products\UpdateProduct\" />

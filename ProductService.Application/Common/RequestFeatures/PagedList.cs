@@ -21,7 +21,7 @@ public class PagedList<T>
 	}
 
 	[JsonConstructor]
-	public PagedList(List<T> items, MetaData metaData)
+	public PagedList(List<T> items, MetaData? metaData)
 	{
 		Items = items;
 		MetaData = metaData;
@@ -38,15 +38,15 @@ public class PagedList<T>
 		return new PagedList<T>(items, count, pageNumber, pageSize);
 	}
 
-	public static async Task<PagedList<T>> ToPagedListAsync(IQueryable<T> source, int pageNumber, int pageSize, CancellationToken cancellationToken = default)
+	public static async Task<PagedList<T>> ToPagedListAsync(IQueryable<T> source, int pageNumber, int pageSize, CancellationToken ct = default)
 	{
 		ArgumentNullException.ThrowIfNull(source);
 
-		var count = await source.CountAsync(cancellationToken);
+		var count = await source.CountAsync(ct);
 		var items = await source
 			.Skip((pageNumber - 1) * pageSize)
 			.Take(pageSize)
-			.ToListAsync(cancellationToken);
+			.ToListAsync(ct);
 
 		return new PagedList<T>(items, count, pageNumber, pageSize);
 	}
