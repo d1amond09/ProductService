@@ -9,7 +9,8 @@ public interface IProductRepository
 	Task<Product?> GetByIdAsync(Guid id, bool trackChanges, CancellationToken ct);
 	Task<PagedList<Product>> GetAllAsync(ProductParameters productParams, bool trackChanges, CancellationToken ct);
 	Task<PagedList<Product>> GetAllByUserIdAsync(Guid userId, ProductParameters productParams, bool trackChanges, CancellationToken ct);
-	
+	Task<Product?> FindByIdToUpdateAsync(Guid id, CancellationToken ct);
 	void Add(Product product);
+	void Update(Product product);
 	void Remove(Product product);
 }

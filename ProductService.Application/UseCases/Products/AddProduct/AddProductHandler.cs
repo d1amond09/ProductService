@@ -13,10 +13,12 @@ public sealed class AddProductHandler(
 {
 	public async Task<Guid> Handle(AddProductCommand request, CancellationToken ct)
 	{
-        var productToCreate = mapper.Map<Product>(request.Product);
+		var productToCreate = mapper.Map<Product>(request.Product);
         productToCreate.CreationDate = DateTime.UtcNow;
 
-		productToCreate.UserId = currentUserService.UserId ?? Guid.Empty;
+		productToCreate.UserId = currentUserService.UserId 
+			?? throw new UnauthorizedAccessException();
+
 		productRep.Add(productToCreate);
 		await unitOfWork.SaveChangesAsync(ct);
 

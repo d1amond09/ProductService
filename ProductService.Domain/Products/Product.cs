@@ -7,6 +7,7 @@ public class Product
 	public string? Description { get; set; }
 	public double Price { get; set; }
 	public bool Availability { get; set; } = true;
+	public bool IsHidden { get; set; } = false;
 	public DateTime CreationDate { get; set; } = DateTime.UtcNow;
 	public Guid UserId { get; set; }
 }

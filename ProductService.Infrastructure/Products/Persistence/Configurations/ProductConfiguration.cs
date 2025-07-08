@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Reflection.Emit;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using ProductService.Domain.Products;
 
@@ -8,6 +9,8 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
 {
 	public void Configure(EntityTypeBuilder<Product> builder)
 	{
+		builder.HasQueryFilter(p => !p.IsHidden);
+
 		DateTime seedDate = new(2025, 7, 7, 16, 0, 0, DateTimeKind.Utc);
 
 		builder.HasData

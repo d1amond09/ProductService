@@ -9,6 +9,7 @@ using ProductService.Application.UseCases.Products.AddProduct;
 using ProductService.Application.UseCases.Products.GetProduct;
 using ProductService.Application.UseCases.Products.GetProducts;
 using ProductService.Application.UseCases.Products.GetProductsByUser;
+using ProductService.Application.UseCases.Products.RemoveProduct;
 
 namespace ProductService.API.Controllers;
 
@@ -55,5 +56,14 @@ public class ProductsController(ISender sender) : ControllerBase
 			new { id = newProductId },
 			new { id = newProductId }
 		);
+	}
+
+	[HttpDelete("{id:guid}")]
+	[Authorize]
+	[ProducesResponseType(StatusCodes.Status204NoContent)]
+	public async Task<IActionResult> DeleteProduct(Guid id)
+	{
+		await sender.Send(new RemoveProductCommand(id));
+		return NoContent();
 	}
 }

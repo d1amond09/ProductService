@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="UseCases\Products\RemoveProduct\" />
     <Folder Include="UseCases\Products\UpdateProduct\" />
   </ItemGroup>
 

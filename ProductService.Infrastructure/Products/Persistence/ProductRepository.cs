@@ -1,4 +1,5 @@
-﻿using ProductService.Application.Common.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using ProductService.Application.Common.Interfaces;
 using ProductService.Application.Common.RequestFeatures;
 using ProductService.Application.Common.RequestFeatures.ModelParameters;
 using ProductService.Domain.Products;
@@ -50,5 +51,8 @@ public class ProductRepository(AppDbContext db) : RepositoryBase<Product>(db), I
 		);
 	}
 
-
+	public async Task<Product?> FindByIdToUpdateAsync(Guid id, CancellationToken ct) =>
+		await _dbSet
+			.IgnoreQueryFilters()
+			.FirstOrDefaultAsync(p => p.Id == id, ct);
 }
